@@ -33,14 +33,14 @@ class MyApplication : Application() {
 
     fun plusNetworkSubcomponent(): NetworkSubcomponent {
         if (networkSubcomponent == null) {
-            networkSubcomponent = appComponent.plusNetworkSubcomponent(NetworkModule())
+            networkSubcomponent = appComponent().plusNetworkSubcomponent(NetworkModule())
         }
         return networkSubcomponent!!
     }
 
     fun plusCacheSubcomponent(): CacheSubcomponent {
         if (cacheSubcomponent == null) {
-            cacheSubcomponent = appComponent.plusCacheSubcomponent(CacheModule())
+            cacheSubcomponent = plusNetworkSubcomponent().plusCacheSubcomponent(CacheModule())
         }
         return cacheSubcomponent!!
     }
