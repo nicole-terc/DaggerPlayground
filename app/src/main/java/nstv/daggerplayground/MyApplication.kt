@@ -1,6 +1,7 @@
 package nstv.daggerplayground
 
 import android.app.Application
+import net.hockeyapp.android.metrics.MetricsManager
 import nstv.daggerplayground.app.AppComponent
 import nstv.daggerplayground.app.AppModule
 import nstv.daggerplayground.app.DaggerAppComponent
@@ -26,7 +27,7 @@ class MyApplication : Application() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         instance = this
-
+        MetricsManager.register(this)
     }
 
     fun appComponent():AppComponent = appComponent
