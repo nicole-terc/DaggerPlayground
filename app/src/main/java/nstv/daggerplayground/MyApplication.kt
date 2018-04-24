@@ -2,13 +2,11 @@ package nstv.daggerplayground
 
 import android.app.Application
 import net.hockeyapp.android.metrics.MetricsManager
-import nstv.daggerplayground.app.AppComponent
-import nstv.daggerplayground.app.AppModule
-import nstv.daggerplayground.app.DaggerAppComponent
-import nstv.daggerplayground.cache.CacheModule
-import nstv.daggerplayground.cache.CacheSubcomponent
-import nstv.daggerplayground.network.NetworkModule
-import nstv.daggerplayground.network.NetworkSubcomponent
+import nstv.baselibrary.AppComponent
+import nstv.baselibrary.AppModule
+import nstv.baselibrary.DaggerAppComponent
+import nstv.networkmodule.DaggerNetworkSubcomponent
+import nstv.networkmodule.NetworkSubcomponent
 
 /**
  * Created by Nicole Terc on 4/16/18.
@@ -16,7 +14,6 @@ import nstv.daggerplayground.network.NetworkSubcomponent
 class MyApplication : Application() {
     private lateinit var appComponent: AppComponent
     private var networkSubcomponent: NetworkSubcomponent? = null
-    private var cacheSubcomponent: CacheSubcomponent? = null
 
     companion object {
         lateinit var instance: MyApplication
@@ -32,17 +29,10 @@ class MyApplication : Application() {
 
     fun appComponent():AppComponent = appComponent
 
-    fun plusNetworkSubcomponent(): NetworkSubcomponent {
+    fun networkComponent(): NetworkSubcomponent {
         if (networkSubcomponent == null) {
-            networkSubcomponent = appComponent().plusNetworkSubcomponent(NetworkModule())
+            networkSubcomponent = DaggerNetworkSubcomponent.builder().appComponent(appComponent).build()
         }
         return networkSubcomponent!!
-    }
-
-    fun plusCacheSubcomponent(): CacheSubcomponent {
-        if (cacheSubcomponent == null) {
-            cacheSubcomponent = plusNetworkSubcomponent().plusCacheSubcomponent(CacheModule())
-        }
-        return cacheSubcomponent!!
     }
 }
