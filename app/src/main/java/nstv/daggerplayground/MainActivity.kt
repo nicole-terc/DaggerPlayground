@@ -2,23 +2,21 @@ package nstv.daggerplayground
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import android.widget.TextView
+import nstv.networkmodule.NetworkInjectorClass
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var fromApp: String
+    var networkInjectorClass = NetworkInjectorClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
+        MyApplication.instance.networkComponent().inject(networkInjectorClass)
         updatetext()
     }
 
     fun updatetext() {
-        textMessage.text = fromApp
+        findViewById<TextView>(R.id.textMessage).text = networkInjectorClass.network.getText()
     }
 }

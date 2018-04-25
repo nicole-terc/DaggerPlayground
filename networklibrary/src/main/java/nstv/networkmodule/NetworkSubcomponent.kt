@@ -12,6 +12,7 @@ import nstv.baselibrary.AppComponent
 @Component(dependencies = [(AppComponent::class)], modules = [(NetworkModule::class)])
 interface NetworkSubcomponent{
     fun application():Application
+    fun appModuleText():String
 
-    fun inject(networkClass: NetworkClass)
+    fun inject(networkInjectorClass: NetworkInjectorClass)
 }
